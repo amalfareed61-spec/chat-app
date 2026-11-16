@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar';
 import HomeView from './components/HomeView';
+import ChatsView from './components/ChatsView';
 import { useState } from 'react';
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     <div>
       <Navbar activeTab = {activeTab} onTabChange={setActiveTab}/>
       {activeTab === 'home' && <HomeView />}
-      {activeTab === 'chats' && <h1>Chats View</h1>}
+      {activeTab === 'chats' && <ChatsView />}
       {activeTab === 'account' && <h1>Account View</h1>}
     </div>
   )
