@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./HomeView.css"
 
 function HomeView() {
     const[pockets, setPockets] = useState([
@@ -20,20 +21,23 @@ function HomeView() {
     }
 
     return (
-        <div>
+        <div className="home-container">
             <h2>My Pockets</h2>
 
-            <input //create an input box to add the new note
-                type = "text"
-                placeholder = "Add new note"
-                value = {newNotes}
-                onChange = {(e) => setNewNotes(e.target.value)}
-            />
-            <button onClick = {handleAddPocket}>Add Pocket</button>
+            <div className="home-input-group">
+                <input //create an input box to add the new note
+                    type = "text"
+                    placeholder = "Add new note"
+                    value = {newNotes}
+                    onChange = {(e) => setNewNotes(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === 'Enter') handleAddPocket(); }}
+                />
+                <button onClick = {handleAddPocket}>Add Pocket</button>
+            </div>
 
-            <ul>
+            <ul className="home-pockets-list">
                 {pockets.map((pocket) => (
-                    <li key = {pocket.id}>{pocket.text}</li>
+                    <li key = {pocket.id} className="home-pockets-item">{pocket.text}</li>
                 ))}
             </ul>
         </div>

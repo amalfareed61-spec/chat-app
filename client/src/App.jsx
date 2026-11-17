@@ -7,7 +7,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('home');
   return (
     <div>
-      <Navbar activeTab = {activeTab} onTabChange={setActiveTab}/>
+      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
       {activeTab === 'home' && <HomeView />}
       {activeTab === 'chats' && <ChatsView />}
       {activeTab === 'account' && <h1>Account View</h1>}

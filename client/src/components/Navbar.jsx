@@ -1,17 +1,34 @@
-function Navbar({ activeTab, onTabChange }) {
-    return (
-        <div className="navbar">
-            <button 
-                className="home-button"
-                onClick = { () => onTabChange('home')}>Home</button>
-            <button 
-                className="chats-button"
-                onClick = { () => onTabChange('chats')}>Chats</button>
-            <button 
-                className="account-button"
-                onClick = { () => onTabChange('account')}>Account</button>
-        </div>
-    )
+import "./Navbar.css";
+
+function Navbar({ activeTab, setActiveTab }) { 
+  return (
+    <nav className="navbar-container">
+      <div className="navbar-brand">ChatApp</div>
+      
+      <div className="navbar-links">
+        <button 
+          className={`navbar-btn ${activeTab === 'home' ? 'active' : ''}`}
+          onClick={() => setActiveTab('home')}
+        >
+          Home
+        </button>
+        
+        <button 
+          className={`navbar-btn ${activeTab === 'chats' ? 'active' : ''}`}
+          onClick={() => setActiveTab('chats')}
+        >
+          Chats
+        </button>
+        
+        <button 
+          className={`navbar-btn ${activeTab === 'account' ? 'active' : ''}`}
+          onClick={() => setActiveTab('account')}
+        >
+          Account
+        </button>
+      </div>
+    </nav>
+  );
 }
- 
+
 export default Navbar;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./ChatsView.css";
 
 function ChatsView () {
     //Memory for all converstaions and chat history
@@ -46,53 +47,62 @@ function ChatsView () {
             return chat;
         });
 
-    setConversations(updatedConversations);
-    setNewMessage('');
-};
+        setConversations(updatedConversations);
+        setNewMessage('');
+    }
 
     return (
-    <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+    <div className="chat-container">
       {/* Left Sidebar: Contact List */}
-      <div style={{ width: '200px', borderRight: '1px solid #ccc', paddingRight: '10px' }}>
-
-        <h3>Chats</h3>
-        {conversations.map((chat) => (
-          <div
-            key={chat.id}
-            onClick={() => setSelectedChatId(chat.id)}
-            style={{
-              padding: '10px',
-              cursor: 'pointer',
-              fontWeight: chat.id === selectedChatId ? 'bold' : 'normal',
-              backgroundColor: chat.id === selectedChatId ? '#f0f0f0' : 'transparent'
-            }}
-          >
-            {chat.name}
-          </div>
-        ))}
+      <div className="chat-sidebar">
+        <h3>Messages</h3>
+        {conversations.map((chat) => {
+          const isActive = chat.id === selectedChatId;
+          return (
+            <div
+              key={chat.id}
+              onClick={() => setSelectedChatId(chat.id)}
+              className={`chat-contact-item ${isActive ? 'active' : ''}`}
+            >
+              {chat.name}
+            </div>
+          );
+        })}
       </div>
 
-      
-
       {/* Right Main Area: Active Conversation */}
-      <div style={{ flex: 1 }}>
-        <h3>Chat with {activeChat.name}</h3>
-        <div>
-          {activeChat.messages.map((msg) => (
-            <p key={msg.id}>
-              <strong>{msg.sender}:</strong> {msg.text}
-            </p>
-          ))}
+      <div className="chat-main">
+        {/* Chat Header */}
+        <div className="chat-header">
+          <h3>Chat with {activeChat.name}</h3>
         </div>
 
-        <div style={{ marginTop: '20px' }}>
-            <input
-                type="text"
-                placeholder={`Message ${activeChat.name}...`}
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-            />
-            <button onClick={handleSendMessage}>Send</button>
+        {/* Message History Feed */}
+        <div className="chat-messages-feed">
+          {activeChat.messages.map((msg) => {
+            const isMe = msg.sender === 'Me';
+            return (
+              <div 
+                key={msg.id} 
+                className={`message-bubble ${isMe ? 'me' : 'other'}`}
+              >
+                {!isMe && <div className="message-sender-name">{msg.sender}</div>}
+                <div className="message-text">{msg.text}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Input Bar */}
+        <div className="chat-input-bar">
+          <input
+            type="text"
+            placeholder={`Message ${activeChat.name}...`}
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleSendMessage(); }}
+          />
+          <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
     </div>
